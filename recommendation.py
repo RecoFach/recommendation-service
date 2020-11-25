@@ -2,7 +2,7 @@ import pandas as pd
 from numpy import dot
 from numpy.linalg import norm
 from typing import List, Tuple, Dict
-from flask import request, Flask, Response, jsonify
+from flask import request, Flask, Response, jsonify, abort
 from pprint import pprint
 
 app = Flask(__name__)
@@ -83,26 +83,18 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
     recommend_json = recommended_subjects_frame.to_json(orient="index")
     return recommend_json
 
-@app.route('/recommend', methods=['GET'])
+@app.route('/recommend', methods=['POST'])
 def main():
     # subjects.csv contains the annotated data based on which will be created a similarity index
     df = pd.read_csv('subjects.csv', sep=";")
 
-    # data = request.get_json()
-    # data.get('Software engineering')
-    # data.get('AI')
-    # data.get('Low-level')
-    # data.get('Security')
-    # data.get('Web')
-    # data.get('Theoretical')
-    # user_query = {'Software engineering': [data.get('Software engineering')],
-    #               'AI': [data.get('AI')],
-    #               'Low-level': [data.get('Low-level')],
-    #               'Security': [data.get('Security')],
-    #               'Web': [data.get('Web')],
-    #               'Theoretical': [data.get('Theoretical')]}
-    user_query = {'Software engineering': [0], 'AI': [1], 'Low-level': [0], 'Security': [0], 'Web': [0],
-                  'Theoretical': [1]}
+    user_query = {'Software engineering': [int(request.args.get('Software engineering'))],
+                  'AI': [int(request.args.get('AI'))],
+                  'Low-level': [int(request.args.get('Low-level'))],
+                  'Security': [int(request.args.get('Security'))],
+                  'Web': [int(request.args.get('Web'))],
+                  'Theoretical': [int(request.args.get('Theoretical'))]}
+
     # processing the user_data and create an recommendation
     preddicted_recoomendation = process_user(user_query, df)
     return jsonify({"recoomendation": preddicted_recoomendation})
