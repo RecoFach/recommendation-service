@@ -97,9 +97,9 @@ def main():
 
     # processing the user_data and create an recommendation
     preddicted_recoomendation = process_user(user_query, df)
-    return jsonify({"recoomendation": preddicted_recoomendation})
+    return preddicted_recoomendation
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8082)
+    app.run('0.0.0.0', port=2000)
     main()
