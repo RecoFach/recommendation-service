@@ -25,12 +25,12 @@ Table of parameters:
 
 **Example:**
 ```json
-{ 'Software engineering': 0,
-  'AI': 0,
-  'Low-level': 0,
-  'Security': 1,
-  'Web': 0,
-  'Theoretical': 0}
+{ "Software engineering": 0,
+  "AI": 0,
+  "Low-level": 0,
+  "Security": 1,
+  "Web": 0,
+  "Theoretical": 0}
 ```
 
 **Curl command:**
