@@ -10,4 +10,4 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 EXPOSE 2000
 
-CMD ["python3", "recommendation.py"]
+CMD ["gunicorn", "-w", "4","-b","0.0.0.0:2000", "recommendation:app" ]

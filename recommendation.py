@@ -87,7 +87,6 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
 def main():
     # subjects.csv contains the annotated data based on which will be created a similarity index
     df = pd.read_csv('subjects.csv', sep=";")
-
     user_query = {'Software engineering': [int(request.args.get('Software engineering'))],
                   'AI': [int(request.args.get('AI'))],
                   'Low-level': [int(request.args.get('Low-level'))],
@@ -102,4 +101,3 @@ def main():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=2000)
-    main()
