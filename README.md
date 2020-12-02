@@ -1,10 +1,23 @@
-# RecoFach-Recommendation
+# RecoFach-Recommendation Service
 
-## Basic functionality
+This service provides creates a recommendation list of subjects based on the users preferences.
+
+## Requirements
+`Python 3.8`
+Libraries: 
+- `numpy`
+- `pandas`
+- `flask`
+- `gunicorngs`
+
+## Docker deployment
 
 Build image `docker build  .`
 
 Run the container `docker run   -p 2000:2000 <Image>`
 
-Use curl to send `POST` request f.e `curl --location --request POST 'http://0.0.0.0:2000/recommend?Software%20engineering=0&AI=0&Low-level=0&Security=1&Web=0&Theoretical=0' \
---header ': '`
+### Endpoints and methods
+
+All information about endpoints and http methods you will find in [Endpoints.md](docs/endpoints/recommendation.md)
+
+
