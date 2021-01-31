@@ -4,6 +4,7 @@ from numpy.linalg import norm
 from typing import List, Tuple, Dict
 from flask import request, Flask, Response, jsonify, abort
 from pprint import pprint
+import json
 
 app = Flask(__name__)
 
@@ -81,7 +82,9 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
 
     recommended_subjects_frame = df.iloc[list_recommended_indexes].reset_index(drop=True)
     recommend_json = recommended_subjects_frame.to_json(orient="index")
-    return recommend_json
+
+    recommend_json_with_slashes = json.dumps(json.loads(recommend_json))
+    return recommend_json_with_slashes
 
 @app.route('/recommend', methods=['POST'])
 def main():
