@@ -87,12 +87,13 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
 def main():
     # subjects.csv contains the annotated data based on which will be created a similarity index
     df = pd.read_csv('subjects.csv', sep=";")
-    user_query = {'Software engineering': [int(request.args.get('Software engineering'))],
-                  'AI': [int(request.args.get('AI'))],
-                  'Low-level': [int(request.args.get('Low-level'))],
-                  'Security': [int(request.args.get('Security'))],
-                  'Web': [int(request.args.get('Web'))],
-                  'Theoretical': [int(request.args.get('Theoretical'))]}
+    data = request.get_json()
+    user_query = {'Software engineering': [int(data.get('SOFTWARE'))],
+                  'AI': [int(data.get('AI'))],
+                  'Low-level': [int(data.get('LOWLEVEL'))],
+                  'Security': [int(data.get('SECURITY'))],
+                  'Web': [int(data.get('WEB'))],
+                  'Theoretical': [int(data.get('THEORETICAL'))]}
 
     # processing the user_data and create an recommendation
     preddicted_recoomendation = process_user(user_query, df)
