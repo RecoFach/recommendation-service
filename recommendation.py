@@ -3,10 +3,13 @@ from numpy import dot
 from numpy.linalg import norm
 from typing import List, Tuple, Dict
 from flask import request, Flask, Response, jsonify, abort
+from flask_cors import CORS, cross_origin
 from pprint import pprint
 import json
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def compare_to_subject_dataset(subject_user: pd.DataFrame,
                                subjects_dataset: pd.DataFrame) -> List[Tuple[int, int]]:
@@ -87,6 +90,7 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
     return recommend_json_with_slashes
 
 @app.route('/recommend', methods=['POST'])
+@cross_origin()
 def main():
     # subjects.csv contains the annotated data based on which will be created a similarity index
     df = pd.read_csv('subjects.csv', sep=";")

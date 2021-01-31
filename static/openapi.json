@@ -1,0 +1,23 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Recommendation service API",
+    "description": "An API to return hello in requested language"
+  },
+  "paths": {
+    "/recommend": {
+      "post": {
+        "tags": [
+          "Recommendation"
+        ],
+        "description": "Returns recommendations based on the query",
+        "responses": {
+          "200": {
+            "description": "Sending recommendations"
+          }
+        }
+      }
+    }
+  }
+}
