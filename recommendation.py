@@ -60,7 +60,7 @@ def recommend_subjects(subject_user: pd.DataFrame,
     return sorted_similar_subjects
 
 
-def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_recommend: int = 5) -> None:
+def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_recommend: int = 6) -> None:
     """
     This function creates a recommendation based on the user_query.
     1. Select only the fields basde on which will be created the consin similarity
