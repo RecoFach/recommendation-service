@@ -84,16 +84,17 @@ def process_user(user_query: Dict[str, List[int]], df: pd.DataFrame, amount_to_r
                                 sorted_similar_subjects[:amount_to_recommend]]
 
     recommended_subjects_frame = df.iloc[list_recommended_indexes].reset_index(drop=True)
-    recommend_json = recommended_subjects_frame.to_json(orient="index")
 
-    recommend_json_with_slashes = json.dumps(json.loads(recommend_json))
+    recommend_json = recommended_subjects_frame.to_json(orient="index", force_ascii=False)
+
+    recommend_json_with_slashes = json.dumps(json.loads(recommend_json),ensure_ascii=False).encode('utf8')
     return recommend_json_with_slashes
 
 @app.route('/recommend', methods=['POST'])
 @cross_origin()
 def main():
     # subjects.csv contains the annotated data based on which will be created a similarity index
-    df = pd.read_csv('subjects.csv', sep=";")
+    df = pd.read_csv('subjects.csv', sep=";",encoding='utf8')
     data = request.get_json()
     user_query = {'Software engineering': [int(data.get('SOFTWARE'))],
                   'AI': [int(data.get('AI'))],
