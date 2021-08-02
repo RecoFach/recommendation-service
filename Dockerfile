@@ -1,13 +1,24 @@
-FROM python:3.8-slim
+FROM golang:1.15 AS build
 
-ADD recommendation.py .
-ADD subjects.csv .
-ADD requirements.txt .
+ENV GO111MODULE=on
+# Set the Current Working Directory inside the container
+WORKDIR /go/src/recommendation_go-service/
 
-WORKDIR .
+# Copy everything from the current directory to the PWD (Present Working Directory) inside the container
+COPY . .
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Download all the dependencies
+RUN go mod download
 
+# Install the package
+RUN go install -v ./...
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o reco *.go
+# This container exposes port 8080 to the outside world
+
+FROM scratch
+WORKDIR /go/src/recommendation_go-service/
+COPY --from=build /go/src/recommendation_go-service/ /go/src/recommendation_go-service/
+#COPY --from=build /go/src/recommendation_go-service/subjects.csv /go/src/recommendation_go-service
 EXPOSE 2000
-
-CMD ["gunicorn", "-w", "4","-b","0.0.0.0:2000", "recommendation:app" ]
+# Run the executable
+CMD ["./reco"]

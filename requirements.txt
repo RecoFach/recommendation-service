@@ -1,5 +1,0 @@
-numpy
-pandas
-flask
-gunicorn
-flask_cors
